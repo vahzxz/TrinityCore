@@ -302,7 +302,17 @@ void SmartAI::UpdateAI(uint32 diff)
     UpdateDespawn(diff);
 
     if (!IsAIControlled())
+    {
+        if (CharmInfo* charmInfo = me->GetCharmInfo())
+        {
+            if (charmInfo->IsCommandAttack() && _canAutoAttack)
+            {
+                DoMeleeAttackIfReady();
+            }
+        }
+
         return;
+    }
 
     if (!hasVictim)
         return;
